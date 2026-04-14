@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>API配置 - 前任AI</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <h2>API配置</h2>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label>API接口地址</label>
+                <input type="text" id="apiUrl" placeholder="https://api.openai.com/v1/chat/completions">
+                <small>支持豆包、千问、Kimi等OpenAI格式接口</small>
+            </div>
+            
+            <div class="form-group">
+                <label>API Key</label>
+                <input type="password" id="apiKey" placeholder="sk-xxxxxxxx">
+                <small>您的API密钥只会保存在本地</small>
+            </div>
+            
+            <div class="form-group">
+                <label>模型名称</label>
+                <input type="text" id="modelName" placeholder="gpt-3.5-turbo">
+                <small>如：gpt-4, qwen-turbo, doubao-pro等</small>
+            </div>
+            
+            <div class="form-group">
+                <label>对话温度 (Temperature)</label>
+                <div class="range-container">
+                    <input type="range" id="temperature" min="0.1" max="1.0" step="0.1" value="0.7">
+                    <span id="tempValue">0.7</span>
+                </div>
+                <small>越低越理性，越高越有创意</small>
+            </div>
+            
+            <button class="btn btn-primary btn-large" onclick="saveConfig()">
+                保存配置
+            </button>
+            
+            <div class="preset-apis">
+                <h3>快速选择</h3>
+                <button class="btn btn-small" onclick="setPreset('openai')">OpenAI</button>
+                <button class="btn btn-small" onclick="setPreset('kimi')">Kimi</button>
+                <button class="btn btn-small" onclick="setPreset('doubao')">豆包</button>
+                <button class="btn btn-small" onclick="setPreset('qwen')">通义千问</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // 加载已有配置
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfigToForm();
+            
+            // 温度滑块监听
+            document.getElementById('temperature').addEventListener('input', function() {
+                document.getElementById('tempValue').textContent = this.value;
+            });
+        });
+    </script>
+</body>
+</html>
