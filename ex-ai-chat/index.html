@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <title>前任AI - 与过去的TA对话</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 启动动画 -->
+        <div class="splash-screen" id="splashScreen">
+            <div class="splash-content">
+                <div class="splash-logo">
+                    <div class="heart-animation">💔</div>
+                </div>
+                <h1 class="splash-title">前任AI</h1>
+                <p class="splash-subtitle" id="splashSubtitle">有些人，一直住在回忆里</p>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主界面 -->
+        <div class="main-screen" id="mainScreen" style="display: none;">
+            <!-- 背景装饰 -->
+            <div class="bg-decoration">
+                <div class="bg-circle c1"></div>
+                <div class="bg-circle c2"></div>
+                <div class="bg-circle c3"></div>
+            </div>
+
+            <!-- 头部 -->
+            <header class="app-header">
+                <div class="header-content">
+                    <div class="logo-small">
+                        <span class="logo-icon">💔</span>
+                        <span class="logo-text">前任AI</span>
+                    </div>
+                    <div class="status-indicator" id="statusIndicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">初始化中...</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 主内容 -->
+            <main class="main-content">
+                <!-- 欢迎卡片 -->
+                <div class="welcome-card animate-in">
+                    <div class="welcome-avatar">
+                        <div class="avatar-ring"></div>
+                        <span class="avatar-emoji">💭</span>
+                    </div>
+                    <h2 class="welcome-title">有些话，还想再说一次</h2>
+                    <p class="welcome-desc" id="welcomeQuote">
+                        "后来才发现，原来真的有人<br>会因为一段回忆而停留很久"
+                    </p>
+                </div>
+
+                <!-- 功能卡片网格 -->
+                <div class="feature-grid">
+                    <div class="feature-card animate-in delay-1" onclick="goToProfile()">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h3>我的资料</h3>
+                        <p>头像与邮箱</p>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card animate-in delay-2" onclick="goToConfig()">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </div>
+                        <h3>API配置</h3>
+                        <p>连接AI模型</p>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card animate-in delay-3" onclick="goToSetup()">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h3>角色设定</h3>
+                        <p>创建TA的人设</p>
+                        <div class="card-arrow">→</div>
+                    </div>
+
+                    <div class="feature-card animate-in delay-4 highlight" onclick="goToChat()" style="grid-column: span 3;">
+                        <div class="feature-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                            </svg>
+                        </div>
+                        <h3>开始对话</h3>
+                        <p>与前任聊天</p>
+                        <div class="card-arrow">→</div>
+                    </div>
+                </div>
+
+                <!-- 快速统计 -->
+                <div class="stats-bar animate-in delay-4">
+                    <div class="stat-item">
+                        <span class="stat-value" id="chatCount">0</span>
+                        <span class="stat-label">对话次数</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="msgCount">0</span>
+                        <span class="stat-label">消息数量</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="apiStatus">未连接</span>
+                        <span class="stat-label">API状态</span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 作者信息 -->
+            <footer class="app-footer">
+                <div class="footer-content">
+                    <div class="author-info">
+                        <span class="author-label">开发者</span>
+                        <span class="author-name">阿九 🦐</span>
+                    </div>
+                    <div class="contact-info">
+                        <a href="contact.html" class="contact-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            联系作者
+                        </a>
+                    </div>
+                    <div class="version">v2.0.2</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // 伤感文案数组
+        const sadQuotes = [
+            "后来才发现，原来真的有人<br>会因为一段回忆而停留很久",
+            "有些人错过了就是一辈子，<br>但有些话还可以继续说",
+            "时间带不走的是回忆，<br>抹不掉的是想念",
+            "我们故事未完，<br>只是换了一种方式继续",
+            "或许有一天会放下，<br>但不是今天",
+            "有些话当时没说出口，<br>现在还有机会吗",
+            "最深的想念，<br>是假装已经忘记",
+            "如果再见一面，<br>你会说什么",
+            "回忆不会消失，<br>只是被藏起来了",
+            "那些年没说出口的喜欢，<br>现在想说给你听"
+        ];
+        
+        // 启动页副标题
+        const splashSubtitles = [
+            "有些人，一直住在回忆里",
+            "后来的我们，还有着后来吗",
+            "故事很长，遗憾也很长",
+            "如果当时勇敢一点",
+            "时间不会倒流，但想念会",
+            "有些告别，是来不及说再见的",
+            "青春里最遗憾的，是错过",
+            "想念一个人的时候，风都知道"
+        ];
+        
+        // 随机显示伤感文案
+        function showRandomQuote() {
+            const quoteEl = document.getElementById('welcomeQuote');
+            if (quoteEl) {
+                const randomQuote = sadQuotes[Math.floor(Math.random() * sadQuotes.length)];
+                quoteEl.innerHTML = randomQuote;
+            }
+        }
+        
+        // 导航到个人资料页
+        function goToProfile() {
+            window.location.href = 'profile.html';
+        }
+        
+        // 启动动画
+        window.addEventListener('load', function() {
+            // 随机显示启动副标题
+            const subtitleEl = document.getElementById('splashSubtitle');
+            if (subtitleEl) {
+                subtitleEl.textContent = splashSubtitles[Math.floor(Math.random() * splashSubtitles.length)];
+            }
+            
+            // 随机显示文案
+            showRandomQuote();
+            
+            setTimeout(function() {
+                document.getElementById('splashScreen').classList.add('fade-out');
+                setTimeout(function() {
+                    document.getElementById('splashScreen').style.display = 'none';
+                    document.getElementById('mainScreen').style.display = 'block';
+                    initHomePage();
+                }, 500);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

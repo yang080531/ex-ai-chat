@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <title>联系作者 - 前任AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 联系页面专属样式 */
+        .contact-hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--gradient-1);
+            border-radius: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .contact-avatar {
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            border: 4px solid rgba(255,255,255,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .contact-hero h2 {
+            font-size: 24px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 8px;
+        }
+        
+        .contact-hero p {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .contact-method {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .contact-method-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 12px;
+        }
+        
+        .contact-method-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .contact-method-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        
+        .form-section {
+            animation: fadeInUp 0.5s ease backwards;
+        }
+        
+        .form-section:nth-child(3) { animation-delay: 0.1s; }
+        .form-section:nth-child(4) { animation-delay: 0.2s; }
+        .form-section:nth-child(5) { animation-delay: 0.3s; }
+        
+        .subject-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .subject-chip {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .subject-chip:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .subject-chip.active {
+            background: var(--gradient-1);
+            border-color: var(--primary);
+        }
+        
+        .send-status {
+            display: none;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .send-status.success {
+            display: block;
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .send-status.error {
+            display: block;
+            background: rgba(245, 101, 101, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+        
+        .send-status.sending {
+            display: block;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .send-status-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .sending-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .author-card {
+            background: var(--gradient-2);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 24px;
+        }
+        
+        .author-card-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        
+        .author-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .author-card p {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            background: rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body data-page="contact">
+    <div class="page-container">
+        <!-- 背景装饰 -->
+        <div class="bg-decoration">
+            <div class="bg-circle c1"></div>
+            <div class="bg-circle c2"></div>
+        </div>
+
+        <!-- 头部 -->
+        <header class="page-header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <h1 class="page-title">联系作者</h1>
+        </header>
+
+        <!-- 内容 -->
+        <main class="page-content">
+            <!-- Hero区域 -->
+            <div class="contact-hero">
+                <div class="contact-avatar">🦐</div>
+                <h2>有任何问题或建议？</h2>
+                <p id="contactQuote">即使在人海中走散，也想听听你的故事</p>
+            </div>
+
+            <!-- 联系方式选择 -->
+            <div class="contact-methods">
+                <div class="contact-method" onclick="openEmail()">
+                    <div class="contact-method-icon">📧</div>
+                    <div class="contact-method-title">邮件联系</div>
+                    <div class="contact-method-desc">3372991529@qq.com</div>
+                </div>
+                <div class="contact-method" onclick="copyQQ()">
+                    <div class="contact-method-icon" style="background: var(--gradient-2);">💬</div>
+                    <div class="contact-method-title">QQ</div>
+                    <div class="contact-method-desc">点击复制QQ号</div>
+                </div>
+            </div>
+
+            <!-- 快速主题 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon">🏷️</span>
+                    反馈类型
+                </h2>
+                <div class="subject-chips">
+                    <span class="subject-chip" onclick="selectSubject(this, '功能建议')">💡 功能建议</span>
+                    <span class="subject-chip" onclick="selectSubject(this, 'Bug反馈')">🐛 Bug反馈</span>
+                    <span class="subject-chip" onclick="selectSubject(this, '使用问题')">❓ 使用问题</span>
+                    <span class="subject-chip" onclick="selectSubject(this, '商务合作')">🤝 商务合作</span>
+                    <span class="subject-chip" onclick="selectSubject(this, '其他')">💬 其他</span>
+                </div>
+            </section>
+
+            <!-- 邮件表单 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon" style="background: var(--gradient-2);">✉️</span>
+                    发送邮件
+                </h2>
+                
+                <form id="contactForm" onsubmit="sendEmail(event)">
+                    <div class="form-group">
+                        <label class="form-label">你的称呼</label>
+                        <input type="text" id="senderName" class="form-input" placeholder="怎么称呼你？" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">你的邮箱</label>
+                        <input type="email" id="senderEmail" class="form-input" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">邮件主题</label>
+                        <input type="text" id="emailSubject" class="form-input" placeholder="关于前任AI的..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">详细内容</label>
+                        <textarea id="emailContent" class="form-textarea" rows="6" placeholder="请详细描述你的问题或建议..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large" id="sendBtn">
+                        <span>🚀</span> 发送邮件
+                    </button>
+                </form>
+
+                <!-- 发送状态 -->
+                <div class="send-status" id="sendStatus">
+                    <div class="send-status-content"></div>
+                </div>
+            </section>
+
+            <!-- 作者信息卡片 -->
+            <div class="author-card">
+                <div class="author-card-avatar">🦐</div>
+                <h3>虾米</h3>
+                <p>前任AI开发者<br>热爱创造有趣的应用<br>有任何问题随时联系我 😊</p>
+                <div class="social-links">
+                    <div class="social-link" onclick="openEmail()" title="邮件">📧</div>
+                    <div class="social-link" onclick="copyQQ()" title="QQ">💬</div>
+                    <div class="social-link" onclick="openGitHub()" title="GitHub">🐙</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // 联系页面伤感文案
+        const contactQuotes = [
+            "即使在人海中走散，也想听听你的故事",
+            "每一个反馈，都是一次重逢",
+            "感谢你愿意分享你的想法",
+            "也许我们可以一起创造更好的回忆",
+            "期待收到你的来信"
+        ];
+        
+        // 随机显示
+        const quoteEl = document.getElementById('contactQuote');
+        if (quoteEl) {
+            quoteEl.textContent = contactQuotes[Math.floor(Math.random() * contactQuotes.length)];
+        }
+        
+        // 选择主题
+        function selectSubject(chip, subject) {
+            document.querySelectorAll('.subject-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            document.getElementById('emailSubject').value = '【前任AI】' + subject;
+        }
+
+        // 打开邮件客户端
+        function openEmail() {
+            const subject = document.getElementById('emailSubject')?.value || '【前任AI】反馈';
+            const body = document.getElementById('emailContent')?.value || '';
+            const mailto = `mailto:3372991529@qq.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
+        }
+
+        // 复制QQ号
+        function copyQQ() {
+            navigator.clipboard.writeText('3372991529').then(() => {
+                showToast('QQ号已复制：3372991529', 'success');
+            }).catch(() => {
+                showToast('QQ号：3372991529', 'info');
+            });
+        }
+
+        // 打开GitHub
+        function openGitHub() {
+            window.open('https://github.com', '_blank');
+        }
+
+        // 发送邮件
+        async function sendEmail(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('senderName').value.trim();
+            const email = document.getElementById('senderEmail').value.trim();
+            const subject = document.getElementById('emailSubject').value.trim();
+            const content = document.getElementById('emailContent').value.trim();
+            
+            if (!name || !email || !subject || !content) {
+                showToast('请填写完整信息', 'error');
+                return;
+            }
+
+            const sendBtn = document.getElementById('sendBtn');
+            const statusDiv = document.getElementById('sendStatus');
+            
+            // 显示发送中
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span class="sending-spinner" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 8px;"></span> 发送中...';
+            
+            statusDiv.className = 'send-status sending';
+            statusDiv.querySelector('.send-status-content').innerHTML = `
+                <div class="sending-spinner"></div>
+                <div>正在发送邮件...</div>
+            `;
+            
+            try {
+                const fullContent = `来自：${name} <${email}>\n\n${content}`;
+                const mailto = `mailto:3372991529@qq.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(fullContent)}`;
+                
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                window.location.href = mailto;
+                
+                statusDiv.className = 'send-status success';
+                statusDiv.querySelector('.send-status-content').innerHTML = `
+                    <div class="send-status-icon">✅</div>
+                    <div>邮件客户端已打开！<br>请检查并发送邮件</div>
+                `;
+                
+                showToast('邮件客户端已打开', 'success');
+                
+                setTimeout(() => {
+                    document.getElementById('contactForm').reset();
+                    document.querySelectorAll('.subject-chip').forEach(c => c.classList.remove('active'));
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<span>🚀</span> 发送邮件';
+                    statusDiv.className = 'send-status';
+                }, 3000);
+                
+            } catch (error) {
+                statusDiv.className = 'send-status error';
+                statusDiv.querySelector('.send-status-content').innerHTML = `
+                    <div class="send-status-icon">❌</div>
+                    <div>发送失败：${error.message}</div>
+                `;
+                
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<span>🚀</span> 发送邮件';
+                
+                showToast('发送失败，请重试', 'error');
+            }
+        }
+
+        // 页面加载时设置默认主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const subjectInput = document.getElementById('emailSubject');
+            if (subjectInput && !subjectInput.value) {
+                subjectInput.value = '【前任AI】反馈';
+            }
+        });
+    </script>
+</body>
+</html>

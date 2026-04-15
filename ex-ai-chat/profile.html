@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>个人资料 - 前任AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="profile">
+    <div class="page-container">
+        <!-- 背景装饰 -->
+        <div class="bg-decoration">
+            <div class="bg-circle c1"></div>
+            <div class="bg-circle c2"></div>
+        </div>
+
+        <!-- 头部 -->
+        <header class="page-header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <h1 class="page-title">个人资料</h1>
+        </header>
+
+        <!-- 内容 -->
+        <main class="page-content">
+            <!-- 头像设置 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon">😊</span>
+                    我的头像
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">设置你的头像</label>
+                    <div class="photo-upload-area" id="userAvatarPreview" onclick="selectUserAvatar()">
+                        <div class="upload-placeholder">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">点击上传头像</div>
+                        </div>
+                        <div class="photo-overlay">
+                            <span>更换头像</span>
+                        </div>
+                    </div>
+                    <input type="file" id="userAvatarInput" accept="image/*" style="display: none;" onchange="handleUserAvatar(event)">
+                    <p class="form-hint">头像会显示在聊天消息中</p>
+                </div>
+            </section>
+
+            <!-- 基本信息 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon" style="background: var(--gradient-2);">👤</span>
+                    基本信息
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">昵称</label>
+                    <input type="text" id="userName" class="form-input" placeholder="怎么称呼你">
+                </div>
+            </section>
+
+            <!-- 机器人邮箱 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon" style="background: var(--gradient-3);">📧</span>
+                    机器人邮箱
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">AI助手的邮箱地址</label>
+                    <input type="email" id="botEmail" class="form-input" placeholder="例如：xiaomihai@mailmolt.com">
+                    <p class="form-hint">用于在应用内显示的联系邮箱</p>
+                </div>
+            </section>
+
+            <!-- 保存按钮 -->
+            <button class="btn btn-primary btn-large" onclick="saveUserProfileData()" style="margin-top: 10px;">
+                <span>💾</span> 保存资料
+            </button>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

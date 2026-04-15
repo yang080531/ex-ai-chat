@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>角色设定 - 前任AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="setup">
+    <div class="page-container">
+        <!-- 背景装饰 -->
+        <div class="bg-decoration">
+            <div class="bg-circle c1"></div>
+            <div class="bg-circle c2"></div>
+        </div>
+
+        <!-- 头部 -->
+        <header class="page-header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <h1 class="page-title">角色设定</h1>
+        </header>
+
+        <!-- 内容 -->
+        <main class="page-content">
+            <!-- 顶部引言 -->
+            <div style="text-align: center; padding: 20px; margin-bottom: 10px;">
+                <p style="font-size: 14px; color: var(--text-secondary); font-style: italic;" id="setupQuote">
+                    "回忆是一场重逢，忘却是再一次别离"
+                </p>
+            </div>
+
+            <!-- 基本信息 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon">👤</span>
+                    基本信息
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">TA的照片</label>
+                    <div class="photo-upload-area" id="photoPreview" onclick="selectPhoto()">
+                        <div class="upload-placeholder">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">点击上传照片</div>
+                        </div>
+                        <div class="photo-overlay">
+                            <span>更换照片</span>
+                        </div>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handlePhoto(event)">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">怎么称呼TA</label>
+                    <input type="text" id="exName" class="form-input" placeholder="比如：宝贝、亲爱的、小明">
+                </div>
+            </section>
+
+            <!-- 导入聊天记录 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon" style="background: var(--gradient-2);">📱</span>
+                    导入聊天记录
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">聊天记录文件 (.txt)</label>
+                    <div class="file-upload-btn" onclick="selectChatLog()">
+                        <span id="chatLogName">📄 选择文件</span>
+                    </div>
+                    <input type="file" id="chatLogInput" accept=".txt" style="display: none;" onchange="handleChatLog(event)">
+                    <p class="form-hint">支持微信/QQ导出的txt格式，系统会自动分析TA的说话风格</p>
+                </div>
+            </section>
+
+            <!-- 性格设定 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon" style="background: var(--gradient-3);">✨</span>
+                    性格设定
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">性格特点</label>
+                    <textarea id="personality" class="form-textarea" placeholder="比如：温柔体贴、有点傲娇、外冷内热、开朗活泼..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">说话风格</label>
+                    <textarea id="speakingStyle" class="form-textarea" placeholder="比如：喜欢用叠词、爱发emoji、打字很快、喜欢用标点符号表达情绪..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">口头禅</label>
+                    <input type="text" id="catchphrase" class="form-input" placeholder="比如：你知道吗、我觉得吧、哈哈哈、嗯嗯">
+                </div>
+            </section>
+
+            <!-- 回忆与关系 -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="icon" style="background: linear-gradient(135deg, #f5af19, #f12711);">💭</span>
+                    回忆与关系
+                </h2>
+                
+                <div class="form-group">
+                    <label class="form-label">共同回忆/故事</label>
+                    <textarea id="memories" class="form-textarea" rows="4" placeholder="比如：第一次见面的地方、一起养过的宠物、特别的纪念日、一起去过的旅行..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">分手原因/现状</label>
+                    <textarea id="breakup" class="form-textarea" placeholder="比如：和平分手、异地分开、性格不合、还有联系、已经释怀..."></textarea>
+                </div>
+            </section>
+
+            <!-- 保存按钮 -->
+            <button class="btn btn-primary btn-large" onclick="savePersonaData()" style="margin-top: 10px;">
+                <span>✨</span> 生成人设
+            </button>
+
+            <!-- 生成的Prompt预览 -->
+            <section class="form-section" id="promptPreview" style="display: none; margin-top: 20px;">
+                <h2 class="section-title">
+                    <span class="icon" style="background: linear-gradient(135deg, #11998e, #38ef7d);">📝</span>
+                    生成的人设Prompt
+                </h2>
+                <div class="prompt-box" id="generatedPrompt"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // 角色设定页面伤感文案
+        const setupQuotes = [
+            "回忆是一场重逢，忘却是再一次别离",
+            "后来才明白，最难的是放下",
+            "有些故事，只适合收藏",
+            "我们终究成了彼此的过去",
+            "时间不是解药，但解药在时间里",
+            "有些人，光是遇见就已经是上上签了",
+            "后来遇到的每一个人，都像你",
+            "原来真的有人把回忆谈的比恋爱还长"
+        ];
+        
+        // 随机显示
+        const quoteEl = document.getElementById('setupQuote');
+        if (quoteEl) {
+            quoteEl.textContent = setupQuotes[Math.floor(Math.random() * setupQuotes.length)];
+        }
+    </script>
+</body>
+</html>
